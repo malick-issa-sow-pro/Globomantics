@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block nav %}  {% endblock %}
+
+{% block content %}
+<div class="card m-5 text-center">
+    <div class="card-header">Welcome to the Globomantics company .</div>
+    <div class="card-body ">
+        <img  src="{% static 'website/images/logo.png' %}" width="195" height="55" class="d-inline-block align-top  " alt="">
+        <p >Developed By :</p>
+        <p>Malick Issa SOW</p>
+        <p>Do you want to visit my  <a href="https://github.com/malick-issa-sow-pro">GitHub</a>  ? </p>
+    </div>
+    <div class="card-footer text-center ">
+        <span>Tel: 77 275 23 59 / mail : malickissasow@gmail.com</span>
+    </div>
+</div>
+{% endblock %}

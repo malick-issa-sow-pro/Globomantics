@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card m-3 text-center" >
+        <div class="card-header">All {{number_category}} Category Available :</div>
+        <div class="card-body ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in category|slice:":50" %}
+                        <tr>
+                            <td>{{c.id}}</td>
+                            <td>
+                                <a class="text-secondary" href="{% url 'one_category' c.id %}">{{c.name_category}}</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center">
+             <!-------------Pagination------------>
+            {% if category.has_other_pages%}
+            <table>
+                <tr class="pagination">
+                    <!------laquo---------->
+                    {% if category.has_previous %}
+                        <td>
+                            <a href="?page={{category.previous_page_number}}">
+                                &laquo;
+                            </a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&laquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----------end-laquo--------->
+
+                    <!----show-current-pages------->
+                    {% for i in category.paginator.page_range  %}
+                        {% if category.number == i %}
+                            <td class="active">
+                                <span>
+                                    {{i}}
+                                    <span class="sr-only">
+                                        (current)
+                                    </span>
+                                </span>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="?page={{i}}">
+                                    {{i}}
+                                </a>
+                            </td>
+                        {% endif %}
+                    {% endfor%}
+                    <!-----end-pages--->
+
+                    <!------raquo---------->
+                    {% if category.has_next %}
+                        <td>
+                            <a href="?page={{category.next_page_number}}">&raquo;</a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&raquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----end-raquo------->
+                </tr>
+            </table>
+            {% endif%}
+            <!------------end-Pagination--------->
+        </div>
+    </div>
+
+{% endblock %}

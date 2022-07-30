@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card m-4 text-center">
+        <div class="card-header ">All {{number_room}} Room Available :</div>
+        <div class="card-body ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name </th>
+                        <th>Room Number</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room  in rooms %}
+                        <tr>
+                            <td>{{room.id}}</td>
+                            <td>
+                                <a class="text-dark" href="{% url 'one_room' room.id %}">{{room.name_room}}</a>
+                            </td>
+                            <td>{{room.number_of_room}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center ">
+            <!-------------Pagination------------>
+            {% if rooms.has_other_pages%}
+            <table>
+                <tr class="pagination">
+                    <!------laquo---------->
+                    {% if rooms.has_previous %}
+                        <td>
+                            <a href="?page={{rooms.previous_page_number}}">
+                                &laquo;
+                            </a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&laquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----------end-laquo--------->
+
+                    <!----show-current-pages------->
+                    {% for i in rooms.paginator.page_range  %}
+                        {% if rooms.number == i %}
+                            <td class="active">
+                                <span>
+                                    {{i}}
+                                    <span class="sr-only">
+                                        (current)
+                                    </span>
+                                </span>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="?page={{i}}">
+                                    {{i}}
+                                </a>
+                            </td>
+                        {% endif %}
+                    {% endfor%}
+                    <!-----end-pages--->
+
+                    <!------raquo---------->
+                    {% if rooms.has_next %}
+                        <td>
+                            <a href="?page={{rooms.next_page_number}}">&raquo;</a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&raquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----end-raquo------->
+                </tr>
+            </table>
+            {% endif%}
+            <!------------end-Pagination--------->
+         </div>
+    </div>
+
+{% endblock %}

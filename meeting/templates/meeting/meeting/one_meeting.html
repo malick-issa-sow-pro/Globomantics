@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card m-5 ">
+        <div class="card-header text-center">The Meeting id : {{meeting.id}} details .</div>
+        <div class="card-body text-center">
+            <table class="table text-center">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Start Time</th>
+                        <th>Duration</th>
+                        <th>Date</th>
+                        <th>Room</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td>{{meeting.id}}</td>
+                            <td>{{meeting.title_meeting}}</td>
+                            <td>{{meeting.start_time}}</td>
+                            <td>{{meeting.duration}}</td>
+                            <td>{{meeting.date_meeting}}</td>
+                            <td>
+                                <a class="text-secondary" href="{% url 'one_room' meeting.room %}">{{meeting.room}}</a>
+                            </td>
+                        </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center">
+            <button  class="mx-5 btn btn-outline-secondary   fa fa-arrow-left"> <a class="text-dark" href="{% url 'all_meeting' %}">On Back </a></button>
+        </div>
+    </div>
+
+{% endblock %}

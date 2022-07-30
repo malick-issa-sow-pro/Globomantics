@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="card m-3 text-center">
+        <div class="card-header ">All {{count_meeting}} Meeting Available :</div>
+        <div class="card-body ">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Start Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for meeting  in meetings|slice:":5" %}
+                        <tr>
+                            <td>{{meeting.id}}</td>
+                            <td>
+                                <a class="text-dark" href="{% url 'one_meeting' meeting.id %}">{{meeting.title_meeting}}</a>
+                            </td>
+                            <td>{{meeting.start_time}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="card-footer text-center ">
+            <!-------------Pagination------------>
+            {% if meetings.has_other_pages%}
+            <table>
+                <tr class="pagination">
+                    <!------laquo---------->
+                    {% if meetings.has_previous %}
+                        <td>
+                            <a href="?page={{meetings.previous_page_number}}">
+                                &laquo;
+                            </a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&laquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----------end-laquo--------->
+
+                    <!----show-current-pages------->
+                    {% for i in meetings.paginator.page_range  %}
+                        {% if meetings.number == i %}
+                            <td class="active">
+                                <span>
+                                    {{i}}
+                                    <span class="sr-only">
+                                        (current)
+                                    </span>
+                                </span>
+                            </td>
+                        {% else %}
+                            <td>
+                                <a href="?page={{i}}">
+                                    {{i}}
+                                </a>
+                            </td>
+                        {% endif %}
+                    {% endfor%}
+                    <!-----end-pages--->
+
+                    <!------raquo---------->
+                    {% if meetings.has_next %}
+                        <td>
+                            <a href="?page={{meetings.next_page_number}}">&raquo;</a>
+                        </td>
+                    {% else %}
+                        <td class="disable">
+                            <span>&raquo;</span>
+                        </td>
+                    {% endif %}
+                    <!-----end-raquo------->
+                </tr>
+            </table>
+            {% endif%}
+            <!------------end-Pagination--------->
+         </div>
+    </div>
+
+{% endblock %}
